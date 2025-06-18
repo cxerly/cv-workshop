@@ -30,6 +30,12 @@ public static class UserEndpoints
             async (ICvService cvService, Guid id) =>
             {
                 var user = await cvService.GetUserByIdAsync(id);
+
+                if (user == null)
+                {
+                    return Results.NotFound("No user with that ID was found");
+                }
+
                 var userDto = user.ToDto();
 
                 return Results.Ok(userDto);
@@ -41,10 +47,16 @@ public static class UserEndpoints
         // Retrieve all cvs that include any of the wanted skills
         app.MapPost(
                 "/users/skills",
-                async () =>
+                async (SkillRequest skills, ICvService cvService) =>
                 {
                     // TODO: Oppgave 4
-                    return Results.Ok();
+                    var users = await cvService.GetUsersWithDesiredSkills(skills.WantedSkills);
+                    if (!users.Any())
+                    {
+                        return Results.NotFound("No users with desired skills.");
+                    }
+                    var usersDto = users.Select(u => u.ToDto()).ToList();
+                    return Results.Ok(usersDto);
                 }
             )
             .WithName("GetUsersWithDesiredSkill")

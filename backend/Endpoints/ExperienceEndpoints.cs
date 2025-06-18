@@ -1,7 +1,19 @@
-﻿using backend.Data.Mappers;
+﻿using System.Linq.Expressions;
+using System.Reflection.Metadata;
+using backend.Data.Mappers;
+using backend.Data.Models;
 using backend.Services;
 
 namespace backend.Endpoints;
+
+enum ExperienceType
+{
+    work,
+    education,
+    coach,
+    hobbyProject,
+    voluntary
+}
 
 public static class ExperienceEndpoints
 {
@@ -13,8 +25,11 @@ public static class ExperienceEndpoints
                 async (ICvService cvService) =>
                 {
                     // TODO: Oppgave 2
+                    var experiences = await cvService.GetAllExperiencesAsync();
+                    var experiencesDto = experiences.Select(e => e.ToDto()).ToList();
 
-                    return Results.Ok();
+                    return Results.Ok(experiences);
+
                 }
             )
             .WithName("GetAllExperiences")
@@ -26,8 +41,15 @@ public static class ExperienceEndpoints
                 async (Guid id, ICvService cvService) =>
                 {
                     // TODO: Oppgave 2
+                    var experience = await cvService.GetExperienceByIdAsync(id);
 
-                    return Results.Ok();
+                    if (experience == null)
+                    {
+                        return Results.NotFound("No experience with that ID was found.");
+                    }
+
+                    var experienceDto = experience.ToDto();
+                    return Results.Ok(experienceDto);
                 }
             )
             .WithName("GetExperienceById")
@@ -39,8 +61,15 @@ public static class ExperienceEndpoints
                 async (string type, ICvService cvService) =>
                 {
                     // TODO: Oppgave 3
+                    var experiences = await cvService.GetExperiencesByTypeAsync(type);
 
-                    return Results.Ok();
+                    if (experiences == null || !experiences.Any())
+                    {
+                        return Results.NotFound("No experiences with the following type found.");
+                    }
+                    var experiencesDto = experiences.Select(e => e.ToDto()).ToList();
+
+                    return Results.Ok(experiencesDto);
                 }
             )
             .WithName("GetExperiencesByType")
