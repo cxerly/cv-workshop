@@ -27,7 +27,7 @@ resource "azurerm_container_app" "cv-frontend" {
       memory = "0.5Gi"
 
       env {
-        name  = "BACKEND_URL"
+        name  = "VITE_BACKEND_URL"
         value = "https://${azurerm_container_app.cv-backend.ingress.0.fqdn}"
       }
 
