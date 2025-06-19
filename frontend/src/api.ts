@@ -1,10 +1,11 @@
 import { User, Experience } from "./types/types";
 
-const API_URL = 'http://localhost:5007';
+
+import.meta.env.VITE_BACKEND_URL;
 
 export const fetchUsers = async (): Promise<User[]> => {
   try {
-    const response = await fetch(`${API_URL}/users`);
+    const response = await fetch(`${VITE_BACKEND_URL}/users`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -19,7 +20,7 @@ export const fetchUsers = async (): Promise<User[]> => {
 
 export const fetchExperiences = async (): Promise<Experience[]> => {
   try {
-    const response = await fetch(`${API_URL}/experiences`);
+    const response = await fetch(`${VITE_BACKEND_URL}/experiences`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
