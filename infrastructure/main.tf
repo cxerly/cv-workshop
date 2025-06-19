@@ -88,7 +88,7 @@ resource "azurerm_container_app" "cv-backend" {
   }
 
   secret {
-    name  = "fontend-api-key"
+    name  = "frontend-api-key"
     value = var.api_key
   }
 
