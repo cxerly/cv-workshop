@@ -8,6 +8,11 @@ public static class CorsExtensions
     {
         var origins = config.GetSection("AllowedCorsOrigins").Get<string[]>()
             ?? [];
+        string frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL");
+        if (!string.IsNullOrEmpty(frontendUrl))
+        {
+            origins = origins.Append(frontendUrl).ToArray();
+        }
 
         services.AddCors(options =>
         {

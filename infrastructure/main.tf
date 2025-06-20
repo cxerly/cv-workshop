@@ -80,6 +80,10 @@ resource "azurerm_container_app" "cv-backend" {
         name  = "ConnectionStrings__DefaultConnection"
         secret_name = "connection-string"
       }
+      env {
+        name = "FRONTEND_URL"
+        value = "https://cv-frontend.${azurerm_container_app_environment.cv.default_domain}"
+      }
     }
 
     min_replicas    = 1
