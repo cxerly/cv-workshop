@@ -73,12 +73,12 @@ resource "azurerm_container_app" "cv-backend" {
 
       env {
         name  = "AppSettings__FrontendApiKey"
-        value = var.api_key
+        secret_name = "api-key"
       }
 
       env {
         name  = "ConnectionStrings__DefaultConnection"
-        value = var.connection_string
+        secret_name = "connection-string"
       }
     }
 
