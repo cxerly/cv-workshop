@@ -73,7 +73,7 @@ resource "azurerm_container_app" "cv-backend" {
 
       env {
         name  = "AppSettings__FrontendApiKey"
-        secret_name = "api-key"
+        secret_name = "frontend-api-key"
       }
 
       env {
