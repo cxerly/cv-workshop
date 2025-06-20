@@ -41,7 +41,7 @@ app.UseCorsPolicy();
 
 // Middleware for API-nøkkelbeskyttelse
 // TODO: Skal vi ha med API-key?
-// app.UseMiddleware<ApiKeyMiddleware>();
+app.UseMiddleware<ApiKeyMiddleware>();
 
 // Koble til GET-endepunkter
 app.MapUserEndpoints();
