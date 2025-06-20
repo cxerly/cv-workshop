@@ -72,13 +72,13 @@ resource "azurerm_container_app" "cv-backend" {
       memory = "0.5Gi"
 
       env {
-        name  = "AppSettings:FrontendApiKey"
-        value = "frontend-api-key"
+        name  = "AppSettings__FrontendApiKey"
+        value = "${TV_VAR_api_key}"
       }
 
       env {
-        name  = "ConnectionStrings:DefaultConnection"
-        value = "connection-string"
+        name  = "ConnectionStrings__DefaultConnection"
+        value = "${TF_VAR_connection_string}"
       }
     }
 
