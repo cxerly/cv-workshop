@@ -73,12 +73,12 @@ resource "azurerm_container_app" "cv-backend" {
 
       env {
         name  = "AppSettings__FrontendApiKey"
-        value = "${TV_VAR_api_key}"
+        value = var.api_key
       }
 
       env {
         name  = "ConnectionStrings__DefaultConnection"
-        value = "${TF_VAR_connection_string}"
+        value = var.connection_string
       }
     }
 
